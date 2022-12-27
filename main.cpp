@@ -5,6 +5,8 @@
 #include "Image.h"
 #include "Ray.h"
 #include "RayUtilityFunction.h"
+#include "HIttableList.h"
+#include "Sphere.h"
 
 
 
@@ -14,6 +16,12 @@ int main() {
     constexpr int ImageWidth = 2000;
     constexpr int ImageHeight = static_cast<int>(ImageWidth/AspectRatio);
     Image img{ImageWidth, ImageHeight};
+
+    //World
+    HittableList World;
+    World.Add(make_shared<Sphere>(point3(0,0,-1), 0.5));
+    World.Add(make_shared<Sphere>(point3(0,-1.5,-1), 1));
+
 
     //Camera
     constexpr double ViewportHeight = 2.0;
@@ -36,7 +44,7 @@ int main() {
             double v = double(j) / (ImageHeight-1);
             Ray r{Origin, LowerLeftCorner + u*Horizontal + v*Vertical - Origin};
 
-            color ColorPixel = RayUtilityFunction::ray_color(r);
+            color ColorPixel = RayUtilityFunction::ray_color(r,World);
             ColorUtilityFunction::write_color(std::cout, ColorPixel);
         }
     }

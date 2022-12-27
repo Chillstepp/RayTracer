@@ -8,6 +8,8 @@
 #include "Vec.h"
 #include "VecUtilityFunction.h"
 #include "Ray.h"
+#include "ConfigAndUtility.h"
+#include "HIttableList.h"
 
 class RayUtilityFunction {
 public:
@@ -28,21 +30,17 @@ public:
         }
     }
 
-    static color ray_color(const Ray& r)
+    static color ray_color(const Ray& r, Hittable& world)
     {
-        // t: ray vector = Origin + t * Direction
-        auto t = RayUtilityFunction::HitSphere(point3(0,0,-1), 0.5, r);
-        //
-        if(t>0.0)
+        hit_record record;
+        if(world.hit(r, 0, infinity,record))
         {
-            vec3 n = VecUtilityFunction::unit_vector(r.at(t) - vec3(0,0,-1));
-            return 0.5*color{n.x()+1,n.y()+1,n.z()+1};
+            return 0.5*(record.normal + color{1,1,1});
         }
         vec3 UnitDirection = VecUtilityFunction::unit_vector(r.getDir());
         //let UnitDirection.y [-1,1] map to t [0,1]
-        t = 0.5*(UnitDirection.y() + 1.0);
+        double t = 0.5*(UnitDirection.y() + 1.0);
         //color interpolation
-
         return (1.0 - t)*color(1.0, 1.0, 1.0) + t*(color(0.5,0.7,1.0));
     }
 };
