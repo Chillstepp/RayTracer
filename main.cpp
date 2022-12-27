@@ -1,13 +1,17 @@
 #include <iostream>
 #include "Vec.h"
 #include "ColorUtilityFunction.h"
+#include "VecUtilityFunction.h"
 #include "Image.h"
 #include "Ray.h"
+#include "RayUtilityFunction.h"
+
+
 
 int main() {
     //Image
     constexpr double AspectRatio = 16.0/9.0;
-    constexpr int ImageWidth = 400;
+    constexpr int ImageWidth = 2000;
     constexpr int ImageHeight = static_cast<int>(ImageWidth/AspectRatio);
     Image img{ImageWidth, ImageHeight};
 
@@ -25,14 +29,14 @@ int main() {
 
     for(int j = ImageHeight - 1; j >= 0; --j)
     {
-        std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
+        std::cerr << "\r Progress: " << 100.0- (j*100.0/ImageHeight) << '%' << std::flush;
         for(int i=0; i < ImageWidth; ++i)
         {
             double u = double(i) / (ImageWidth-1);
             double v = double(j) / (ImageHeight-1);
             Ray r{Origin, LowerLeftCorner + u*Horizontal + v*Vertical - Origin};
 
-            color ColorPixel = ColorUtilityFunction::ray_color(r);
+            color ColorPixel = RayUtilityFunction::ray_color(r);
             ColorUtilityFunction::write_color(std::cout, ColorPixel);
         }
     }

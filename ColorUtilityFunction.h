@@ -20,14 +20,6 @@ public:
     }
 
     //
-    static color ray_color(const Ray& r)
-    {
-        vec3 UnitDirection = VecUtilityFunction::unit_vector(r.getDir());
-        //let UnitDirection.y [-1,1] map to t [0,1]
-        auto t = 0.5*(UnitDirection.y() + 1.0);
-        //color interpolation
-        return (1.0 - t)*color(1.0, 1.0, 1.0) + t*(color(0.5,0.7,1.0));
-    }
 };
 
 
