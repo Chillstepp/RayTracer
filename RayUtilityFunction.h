@@ -15,16 +15,16 @@ public:
     {
         vec3 oc = r.getOrigin() - Centre;
         auto a = VecUtilityFunction::dot(r.getDir(), r.getDir());
-        auto b =2.0*VecUtilityFunction::dot(oc, r.getDir());
+        auto half_b = VecUtilityFunction::dot(oc, r.getDir());
         auto c = VecUtilityFunction::dot(oc, oc) - Radius * Radius;
-        auto delta = b*b - 4*a*c;
+        auto delta = half_b*half_b - a*c;
         if(delta<0)
         {
             return -1.0;
         }
         else
         {
-            return (-b - sqrt(delta)) / (2.0*a);
+            return (-half_b - sqrt(delta)) / a;
         }
     }
 
