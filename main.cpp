@@ -7,30 +7,26 @@
 #include "RayUtilityFunction.h"
 #include "HIttableList.h"
 #include "Sphere.h"
+#include "Camera.h"
 
 
 
 int main() {
     //Image
     constexpr double AspectRatio = 16.0/9.0;
-    constexpr int ImageWidth = 2000;
+    constexpr int ImageWidth = 400;
     constexpr int ImageHeight = static_cast<int>(ImageWidth/AspectRatio);
+    constexpr int samples_per_pixel = 100;
     Image img{ImageWidth, ImageHeight};
 
     //World
     HittableList World;
     World.Add(make_shared<Sphere>(point3(0,0,-1), 0.5));
-    World.Add(make_shared<Sphere>(point3(0,-1.5,-1), 1));
+    World.Add(make_shared<Sphere>(point3(0,-100.5,-1), 100));
 
 
     //Camera
-    constexpr double ViewportHeight = 2.0;
-    constexpr double ViewportWidth = AspectRatio*ViewportHeight;
-    constexpr double FocalLength = 1.0;
-    point3 Origin{0,0,0};
-    vec3 Horizontal{ViewportWidth,0,0};
-    vec3 Vertical{0, ViewportHeight, 0};
-    point3 LowerLeftCorner = Origin - Horizontal/2 - Vertical/2 - vec3{0,0,FocalLength};
+    Camera camera;
 
     //Render
     std::cout << "P3\n" << ImageWidth << ' ' <<ImageHeight << "\n255\n";
@@ -38,14 +34,17 @@ int main() {
     for(int j = ImageHeight - 1; j >= 0; --j)
     {
         std::cerr << "\r Progress: " << 100.0- (j*100.0/ImageHeight) << '%' << std::flush;
-        for(int i=0; i < ImageWidth; ++i)
+        for(int i = 0; i < ImageWidth; ++i)
         {
-            double u = double(i) / (ImageWidth-1);
-            double v = double(j) / (ImageHeight-1);
-            Ray r{Origin, LowerLeftCorner + u*Horizontal + v*Vertical - Origin};
-
-            color ColorPixel = RayUtilityFunction::ray_color(r,World);
-            ColorUtilityFunction::write_color(std::cout, ColorPixel);
+            color pixel_color(0, 0, 0);
+            for(int s = 0; s < samples_per_pixel; ++s)
+            {
+                double u = (i + random_double()) / (ImageWidth-1);
+                double v = (j + random_double()) / (ImageHeight-1);
+                Ray r = camera.get_ray(u,v);
+                pixel_color += RayUtilityFunction::ray_color(r, World);
+            }
+            ColorUtilityFunction::write_color(std::cout, pixel_color ,samples_per_pixel);
         }
     }
     std::cerr << "\nDone.\n";
