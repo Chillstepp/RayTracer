@@ -30,12 +30,17 @@ public:
         }
     }
 
-    static color ray_color(const Ray& r, Hittable& world)
+    static color ray_color(const Ray& r, Hittable& world, int Depth)
     {
         hit_record record;
+        if(Depth <= 0)
+        {
+            return color(0,0,0);
+        }
         if(world.hit(r, 0, infinity,record))
         {
-            return 0.5*(record.normal + color{1,1,1});
+            point3 target = record.p + record.normal + VecUtilityFunction::random_in_unit_sphere();
+            return 0.5 * ray_color(Ray{record.p, target - record.p}, world, Depth-1);
         }
         vec3 UnitDirection = VecUtilityFunction::unit_vector(r.getDir());
         //let UnitDirection.y [-1,1] map to t [0,1]

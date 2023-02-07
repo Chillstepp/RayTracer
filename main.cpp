@@ -18,6 +18,7 @@ int main() {
     constexpr int ImageHeight = static_cast<int>(ImageWidth/AspectRatio);
     constexpr int samples_per_pixel = 100;
     Image img{ImageWidth, ImageHeight};
+    constexpr int max_depth = 50;
 
     //World
     HittableList World;
@@ -42,7 +43,7 @@ int main() {
                 double u = (i + random_double()) / (ImageWidth-1);
                 double v = (j + random_double()) / (ImageHeight-1);
                 Ray r = camera.get_ray(u,v);
-                pixel_color += RayUtilityFunction::ray_color(r, World);
+                pixel_color += RayUtilityFunction::ray_color(r, World, max_depth);
             }
             ColorUtilityFunction::write_color(std::cout, pixel_color ,samples_per_pixel);
         }

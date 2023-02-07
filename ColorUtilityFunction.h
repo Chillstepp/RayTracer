@@ -22,9 +22,10 @@ public:
         double b = pixel_color.z();
 
         double scale = 1.0 / samples_per_pixel;
-        r *= scale;
-        g *= scale;
-        b *= scale;
+        //gamma correct with gamma = 2.0:
+        r = sqrt(r * scale);
+        g = sqrt(g * scale);
+        b = sqrt(b * scale);
 
         // Write the translated [0,255] value of each color component.
         out << static_cast<int>(255.999 * clamp(r, 0.0, 1.0)) << ' '

@@ -6,34 +6,8 @@
 #define RayTracer_VECUTILITYFUNCTION_H
 
 #include "Vec.h"
+#include "ConfigAndUtility.h"
 
-inline std::ostream& operator<<(std::ostream &out, const vec3 &v) {
-    return out << v.e[0] << ' ' << v.e[1] << ' ' << v.e[2];
-}
-
-inline vec3 operator+(const vec3 &u, const vec3 &v) {
-    return {u.e[0] + v.e[0], u.e[1] + v.e[1], u.e[2] + v.e[2]};
-}
-
-inline vec3 operator-(const vec3 &u, const vec3 &v) {
-    return {u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]};
-}
-
-inline vec3 operator*(const vec3 &u, const vec3 &v) {
-    return {u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]};
-}
-
-inline vec3 operator*(double t, const vec3 &v) {
-    return {t*v.e[0], t*v.e[1], t*v.e[2]};
-}
-
-inline vec3 operator*(const vec3 &v, double t) {
-    return t * v;
-}
-
-inline vec3 operator/(vec3 v, double t) {
-    return (1/t) * v;
-}
 
 class VecUtilityFunction
 {
@@ -54,5 +28,22 @@ public:
         return v / v.Length();
     }
 
+    inline static vec3 random(){
+        return {random_double(), random_double(), random_double()};
+    }
+
+    inline static vec3 random(double min, double max){
+        return {random_double(min, max), random_double(min, max), random_double(min, max)};
+    }
+
+    static inline vec3 random_in_unit_sphere()
+    {
+        while(true)
+        {
+            vec3 p = random(-1, 1);
+            if(p.LengthSquared() >= 1) continue;
+            return p;
+        }
+    }
 };
 #endif //RayTracer_VECUTILITYFUNCTION_H

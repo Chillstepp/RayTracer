@@ -10,6 +10,7 @@ Camera::Camera() {
     double viewport_width = aspect_ratio * viewport_height;
     double facal_length = 1.0;
 
+
     origin = point3(0,0,0);
     horizontal = vec3(viewport_width, 0.0, 0.0);
     vertical = vec3(0.0, viewport_height, 0.0);
