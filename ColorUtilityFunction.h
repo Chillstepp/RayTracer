@@ -15,7 +15,7 @@ class ColorUtilityFunction
 {
 public:
     static void write_color(std::ostream &out, color pixel_color, int samples_per_pixel) {
-        assert(samples_per_pixel!=0);
+        assert(samples_per_pixel > 0);
 
         double r = pixel_color.x();
         double g = pixel_color.y();

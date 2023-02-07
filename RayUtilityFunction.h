@@ -37,7 +37,7 @@ public:
         {
             return color(0,0,0);
         }
-        if(world.hit(r, 0, infinity,record))
+        if(world.hit(r, 0.001, infinity,record))
         {
             point3 target = record.p + record.normal + VecUtilityFunction::random_in_unit_sphere();
             return 0.5 * ray_color(Ray{record.p, target - record.p}, world, Depth-1);

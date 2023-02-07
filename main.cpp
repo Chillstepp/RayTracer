@@ -14,7 +14,7 @@
 int main() {
     //Image
     constexpr double AspectRatio = 16.0/9.0;
-    constexpr int ImageWidth = 400;
+    constexpr int ImageWidth = 1000;
     constexpr int ImageHeight = static_cast<int>(ImageWidth/AspectRatio);
     constexpr int samples_per_pixel = 100;
     Image img{ImageWidth, ImageHeight};

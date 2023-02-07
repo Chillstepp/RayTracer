@@ -14,7 +14,7 @@ bool Sphere::hit(const Ray &r, double t_min, double t_max, hit_record &rec) cons
     if(discriminant<0) return false;
 
     double root = (-half_b - sqrt(discriminant)) / a;
-    if(root<t_min or t_max < root)
+    if(root < t_min or t_max < root)
     {
         root = (-half_b + sqrt(discriminant)) / a;
         if(root < t_min or t_max < root)
