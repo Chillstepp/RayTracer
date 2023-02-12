@@ -35,8 +35,13 @@ public:
         hit_record record;
         if(Depth <= 0)
         {
-            return color(0,0,0);
+            return color{0,0,0};
         }
+		//[why]: 球面粉刺问题，从球面反射的光不应该给球面自身造成阴影。
+		//为什么会出来黑点点？
+		// 1. 主要是因为 每次衰减一半，衰减到最后就颜色就成黑色了
+		// 2. r是个反射光，他的起点可能因为误差并正好在圆表面上，而也可能在内部/外部很近的地方，如果是圆内很近的地方，t=0会发现永远会和圆表面有交点，导致光线很难出来，这也是运行慢的原因。
+		// 解决方法: 很简单我们把从内部射出的光纤和表面接触的点排除即可，即t = 0.01 以上再计算相交即可。
         if(world.hit(r, 0.001, infinity,record))
         {
             point3 target = record.p + record.normal + VecUtilityFunction::random_in_unit_sphere();

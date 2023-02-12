@@ -36,7 +36,7 @@ public:
         return {random_double(min, max), random_double(min, max), random_double(min, max)};
     }
 
-    static inline vec3 random_in_unit_sphere()
+	inline static vec3 random_in_unit_sphere()
     {
         while(true)
         {
@@ -45,5 +45,9 @@ public:
             return p;
         }
     }
+
+	inline static vec3 random_unit_vector() {
+		return unit_vector(random_in_unit_sphere());
+	}
 };
 #endif //RayTracer_VECUTILITYFUNCTION_H
