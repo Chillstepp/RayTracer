@@ -49,5 +49,11 @@ public:
 	inline static vec3 random_unit_vector() {
 		return unit_vector(random_in_unit_sphere());
 	}
+	//see https://raytracing.github.io/books/RayTracingInOneWeekend.html#metal/mirroredlightreflection for details
+	inline static vec3 Reflect(const vec3& v, const vec3& n)
+	{
+		return v - 2 * dot(v,n) * n;
+	}
+
 };
 #endif //RayTracer_VECUTILITYFUNCTION_H

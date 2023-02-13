@@ -6,6 +6,8 @@ A tiny raytracer
 
 ![diffuse](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/%E4%B8%8B%E8%BD%BD.png)
 
+![image-20230214014050843](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230214014050843.png)
+
 ## Some Tips
 
 ### Fixing Shadow Acne

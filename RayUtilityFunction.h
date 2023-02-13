@@ -10,6 +10,7 @@
 #include "Ray.h"
 #include "ConfigAndUtility.h"
 #include "HIttableList.h"
+#include "Material.h"
 
 class RayUtilityFunction {
 public:
@@ -44,8 +45,13 @@ public:
 		// 解决方法: 很简单我们把从内部射出的光纤和表面接触的点排除即可，即t = 0.01 以上再计算相交即可。
         if(world.hit(r, 0.001, infinity,record))
         {
-            point3 target = record.p + record.normal + VecUtilityFunction::random_in_unit_sphere();
-            return 0.5 * ray_color(Ray{record.p, target - record.p}, world, Depth-1);
+			Ray Scattered{};
+			color Attenuation{};
+			if(record.MaterialPtr->Scatter(r,record,Attenuation,Scattered))
+			{
+				return Attenuation * ray_color(Scattered, world, Depth - 1);
+			}
+			return color{0,0,0};
         }
         vec3 UnitDirection = VecUtilityFunction::unit_vector(r.getDir());
         //let UnitDirection.y [-1,1] map to t [0,1]

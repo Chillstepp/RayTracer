@@ -8,13 +8,14 @@
 #include "Ray.h"
 #include "VecUtilityFunction.h"
 
+class Material;
+
 struct hit_record
 {
     point3 p;
     vec3 normal;
-    //hit times
     double t;
-
+	shared_ptr<Material>MaterialPtr;
     //judge the ray is from inside/outside the sphere
     bool front_face;
     inline void set_face_normal(const Ray& r, const vec3& outward_normal) {

@@ -8,6 +8,8 @@
 #include "HIttableList.h"
 #include "Sphere.h"
 #include "Camera.h"
+#include "Metal.h"
+#include "Lambertian.h"
 
 
 
@@ -20,10 +22,19 @@ int main() {
     Image img{ImageWidth, ImageHeight};
     constexpr int max_depth = 50;
 
-    //World
+	//Material
+	auto Material_Ground = make_shared<Lambertian>(color(0.96, 0.96, 0.96));
+	auto Material_Center = make_shared<Lambertian>(color(0.941, 1, 1));
+	auto Material_Left = make_shared<Metal>(color(0.8, 0.8, 0.8));
+	auto Material_Right = make_shared<Metal>(color(0.69, 0.878, 0.9));
+
+
+	//World
     HittableList World;
-    World.Add(make_shared<Sphere>(point3(0,0,-1), 0.5));
-    World.Add(make_shared<Sphere>(point3(0,-100.5,-1), 100));
+	World.Add(make_shared<Sphere>(point3( 0.0, -100.5, -1.0), 100.0, Material_Ground));
+	World.Add(make_shared<Sphere>(point3( 0.0, 0.0, -1.0),0.5, Material_Center));
+	World.Add(make_shared<Sphere>(point3( -1.5, 0.0, -1.0), 0.3, Material_Left));
+	World.Add(make_shared<Sphere>(point3( 1.5, 0.0, -1.0), 0.2, Material_Right));
 
 
     //Camera

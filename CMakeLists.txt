@@ -15,4 +15,4 @@ add_executable(RayTracer main.cpp
         HIttableList.cpp HIttableList.h
         ConfigAndUtility.h
         Camera.cpp Camera.h
-        )
+        Material.cpp Material.h Lambertian.cpp Lambertian.h Metal.cpp Metal.h)
