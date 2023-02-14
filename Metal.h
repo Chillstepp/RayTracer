@@ -9,13 +9,14 @@
 class Metal: public Material
 {
  public:
-	Metal(const color& a): Albedo(a){}
+	Metal(const color& a, const double& f): Albedo(a), Fuzz(f < 1 ? f : 1){}
 	virtual bool Scatter(const Ray &r_in, const hit_record &rec, color &attenuation, Ray &scattered) const override;
 
  public:
-	//反射率
+	//material color
 	color Albedo;
-
+	//Fuzzy Reflection, this parameter is used to roughen the surface
+	double Fuzz;
 };
 
 #endif //RAYTRACER__METAL_H_

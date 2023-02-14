@@ -23,18 +23,18 @@ int main() {
     constexpr int max_depth = 50;
 
 	//Material
-	auto Material_Ground = make_shared<Lambertian>(color(0.96, 0.96, 0.96));
-	auto Material_Center = make_shared<Lambertian>(color(0.941, 1, 1));
-	auto Material_Left = make_shared<Metal>(color(0.8, 0.8, 0.8));
-	auto Material_Right = make_shared<Metal>(color(0.69, 0.878, 0.9));
+	auto Material_Ground = make_shared<Lambertian>(color(0.75, 0.75, 0.75));
+	auto Material_Center = make_shared<Lambertian>(color(0.7, 0.3, 0.3));
+	auto Material_Left = make_shared<Metal>(color(0.8, 0.8, 0.8), 0.3);
+	auto Material_Right = make_shared<Metal>(color(0.69, 0.878, 0.9), 1);
 
 
 	//World
     HittableList World;
 	World.Add(make_shared<Sphere>(point3( 0.0, -100.5, -1.0), 100.0, Material_Ground));
 	World.Add(make_shared<Sphere>(point3( 0.0, 0.0, -1.0),0.5, Material_Center));
-	World.Add(make_shared<Sphere>(point3( -1.5, 0.0, -1.0), 0.3, Material_Left));
-	World.Add(make_shared<Sphere>(point3( 1.5, 0.0, -1.0), 0.2, Material_Right));
+	World.Add(make_shared<Sphere>(point3( -1.0, 0.0, -1.0), 0.4, Material_Left));
+	World.Add(make_shared<Sphere>(point3( 1.0, 0.0, -1.0), 0.3, Material_Right));
 
 
     //Camera

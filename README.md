@@ -4,9 +4,19 @@ A tiny raytracer
 
 ![Normal](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20221227174539161.png)
 
+
+
 ![diffuse](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/%E4%B8%8B%E8%BD%BD.png)
 
+Metal Material/Lambertian Material：
+
 ![image-20230214014050843](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230214014050843.png)
+
+Fuzzy Metal Material：
+
+![image-20230214210411745](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230214210411745.png)
+
+
 
 ## Some Tips
 
@@ -22,7 +32,7 @@ A tiny raytracer
 
    r是个反射光，他的起点可能因为误差并正好在圆表面上，而也可能在内部/外部很近的地方，如果是圆内很近的地方，t=0会发现永远会和圆表面有交点，导致光线很难出来，这也是运行慢的原因。
 
-解决方法: 很简单我们把从内部射出的光纤和表面接触的点排除即可，即t = 0.01 以上再计算相交即可。
+解决方法: 很简单我们把从内部射出的光线和表面接触的点排除即可，即t > 0.01 以上再计算相交即可。
 
 ![image-20230212175446861](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230212175446861.png)
 
