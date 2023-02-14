@@ -18,7 +18,12 @@ Fuzzy Metal Material：
 
 Dielectric Material(glass): 
 
-![image-20230214234712458](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230214234712458.png)
+reflect: 
+
+1. reflectivity that varies with angle
+2. Snell's law may occur to $sin(\theta ')$ may > 1
+
+![image-20230215011521835](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230215011521835.png)
 
 ## Some Tips
 
