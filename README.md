@@ -16,7 +16,9 @@ Fuzzy Metal Material：
 
 ![image-20230214210411745](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230214210411745.png)
 
+Dielectric Material(glass): 
 
+![image-20230214234712458](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230214234712458.png)
 
 ## Some Tips
 

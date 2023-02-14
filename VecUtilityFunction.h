@@ -49,11 +49,21 @@ public:
 	inline static vec3 random_unit_vector() {
 		return unit_vector(random_in_unit_sphere());
 	}
-	//see https://raytracing.github.io/books/RayTracingInOneWeekend.html#metal/mirroredlightreflection for details
+	//Related derivation see: https://raytracing.github.io/books/RayTracingInOneWeekend.html#metal/mirroredlightreflection for details
 	inline static vec3 Reflect(const vec3& v, const vec3& n)
 	{
 		return v - 2 * dot(v,n) * n;
 	}
 
+	//Related derivation see: https://raytracing.github.io/books/RayTracingInOneWeekend.html#dielectrics/snell'slaw
+	inline static vec3 Refract(const vec3& ray_in, const vec3& n, double etai_over_etat){
+		//we want to assure that the ray_in is unit vector
+		vec3 ray_in_unit = VecUtilityFunction::unit_vector(ray_in);
+		//we auusre that n(normal) is unit vector
+		double cos_theta = std::min(VecUtilityFunction::dot(-ray_in_unit, n), 1.0);
+		vec3 r_out_perpendicular = etai_over_etat*(ray_in_unit + cos_theta*n);
+		vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perpendicular.LengthSquared()))*n;
+		return r_out_parallel + r_out_perpendicular;
+	}
 };
 #endif //RayTracer_VECUTILITYFUNCTION_H

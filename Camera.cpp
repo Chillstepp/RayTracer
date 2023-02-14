@@ -4,11 +4,12 @@
 
 #include "Camera.h"
 
-Camera::Camera() {
-    double aspect_ratio = 16.0/9.0;
-    double viewport_height = 2.0;
+Camera::Camera(double vfov/*vertical field-of-view in degrees*/, double aspect_ratio) {
+	double facal_length = 1.0;
+	double theta = degrees_to_radians(vfov);
+    double h = tan(theta/2) * facal_length;
+    double viewport_height = 2.0 * h;
     double viewport_width = aspect_ratio * viewport_height;
-    double facal_length = 1.0;
 
 
     origin = point3(0,0,0);

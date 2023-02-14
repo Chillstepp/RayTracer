@@ -10,7 +10,7 @@
 #include "Camera.h"
 #include "Metal.h"
 #include "Lambertian.h"
-
+#include "Dielectric.h"
 
 
 int main() {
@@ -26,8 +26,8 @@ int main() {
 	auto Material_Ground = make_shared<Lambertian>(color(0.75, 0.75, 0.75));
 	auto Material_Center = make_shared<Lambertian>(color(0.7, 0.3, 0.3));
 	auto Material_Left = make_shared<Metal>(color(0.8, 0.8, 0.8), 0.3);
-	auto Material_Right = make_shared<Metal>(color(0.69, 0.878, 0.9), 1);
-
+	//auto Material_Right = make_shared<Metal>(color(0.69, 0.878, 0.9), 1);
+	auto Material_Right = make_shared<Dielectric>(1.5);
 
 	//World
     HittableList World;
@@ -38,7 +38,9 @@ int main() {
 
 
     //Camera
-    Camera camera;
+	const auto R = cos(pi/3);
+	constexpr auto aspect_ratio = 16.0 / 9.0;
+    Camera camera(90.0, aspect_ratio);
 
     //Render
     std::cout << "P3\n" << ImageWidth << ' ' <<ImageHeight << "\n255\n";
