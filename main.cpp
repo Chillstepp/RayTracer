@@ -12,33 +12,84 @@
 #include "Lambertian.h"
 #include "Dielectric.h"
 
+HittableList random_world()
+{
+    HittableList world;
+    auto ground_material = make_shared<Lambertian>(color(0.5, 0.5, 0.5));
+    world.Add(make_shared<Sphere>(point3(0,-1000,0), 1000, ground_material));
+
+    for (int a = -11; a < 11; a++) {
+        for (int b = -11; b < 11; b++) {
+            auto choose_mat = random_double();
+            point3 center(a + 0.9*random_double(), 0.2, b + 0.9*random_double());
+
+            if ((center - point3(4, 0.2, 0)).Length() > 0.9) {
+                shared_ptr<Material> Sphere_material;
+
+                if (choose_mat < 0.8) {
+                    // diffuse
+                    auto albedo = VecUtilityFunction::random() * VecUtilityFunction::random();
+                    Sphere_material = make_shared<Lambertian>(albedo);
+                    world.Add(make_shared<Sphere>(center, 0.2, Sphere_material));
+                } else if (choose_mat < 0.95) {
+                    // Metal
+                    auto albedo = VecUtilityFunction::random(0.5, 1);
+                    auto fuzz = random_double(0, 0.5);
+                    Sphere_material = make_shared<Metal>(albedo, fuzz);
+                    world.Add(make_shared<Sphere>(center, 0.2, Sphere_material));
+                } else {
+                    // glass
+                    Sphere_material = make_shared<Dielectric>(1.5);
+                    world.Add(make_shared<Sphere>(center, 0.2, Sphere_material));
+                }
+            }
+        }
+    }
+
+    auto material1 = make_shared<Dielectric>(1.5);
+    world.Add(make_shared<Sphere>(point3(0, 1, 0), 1.0, material1));
+
+    auto material2 = make_shared<Lambertian>(color(0.4, 0.2, 0.1));
+    world.Add(make_shared<Sphere>(point3(-4, 1, 0), 1.0, material2));
+
+    auto material3 = make_shared<Metal>(color(0.7, 0.6, 0.5), 0.0);
+    world.Add(make_shared<Sphere>(point3(4, 1, 0), 1.0, material3));
+
+    return world;
+}
 
 int main() {
     //Image
-    constexpr double AspectRatio = 16.0/9.0;
-    constexpr int ImageWidth = 1000;
+    constexpr double AspectRatio = 3.0/2.0;
+    constexpr int ImageWidth = 1200;
     constexpr int ImageHeight = static_cast<int>(ImageWidth/AspectRatio);
     constexpr int samples_per_pixel = 500;
     Image img{ImageWidth, ImageHeight};
     constexpr int max_depth = 50;
 
-	//Material
-	auto Material_Ground = make_shared<Lambertian>(color(0.75, 0.75, 0.75));
-	auto Material_Center = make_shared<Lambertian>(color(0.7, 0.3, 0.3));
-	auto Material_Left = make_shared<Metal>(color(0.8, 0.8, 0.8), 0.3);
-	//auto Material_Right = make_shared<Metal>(color(0.69, 0.878, 0.9), 1);
-	auto Material_Right = make_shared<Dielectric>(1.5);
+//	//Material
+//	auto Material_Ground = make_shared<Lambertian>(color(0.75, 0.75, 0.75));
+//	auto Material_Center = make_shared<Lambertian>(color(0.7, 0.3, 0.3));
+//	auto Material_Left = make_shared<Metal>(color(0.8, 0.8, 0.8), 0.3);
+//	//auto Material_Right = make_shared<Metal>(color(0.69, 0.878, 0.9), 1);
+//	auto Material_Right = make_shared<Dielectric>(1.5);
+//
+//	//World
+//    HittableList World;
+//	World.Add(make_shared<Sphere>(point3( 0.0, -100.5, -1.0), 100.0, Material_Ground));
+//	World.Add(make_shared<Sphere>(point3( 0.0, 0.0, -1.0),0.5, Material_Center));
+//	World.Add(make_shared<Sphere>(point3( -1.0, 0.0, -1.0), 0.4, Material_Left));
+//	World.Add(make_shared<Sphere>(point3( 1.0, 0.0, -1.0), 0.3, Material_Right));
 
-	//World
-    HittableList World;
-	World.Add(make_shared<Sphere>(point3( 0.0, -100.5, -1.0), 100.0, Material_Ground));
-	World.Add(make_shared<Sphere>(point3( 0.0, 0.0, -1.0),0.5, Material_Center));
-	World.Add(make_shared<Sphere>(point3( -1.0, 0.0, -1.0), 0.4, Material_Left));
-	World.Add(make_shared<Sphere>(point3( 1.0, 0.0, -1.0), 0.3, Material_Right));
+    HittableList World = random_world();
 
-
+    point3 lookfrom(13,2,3);
+    point3 lookat(0,0,0);
+    vec3 vup(0,1,0);
+    auto dist_to_focus = 10.0;
+    auto aperture = 0.1;
     //Camera
-    Camera camera(point3(-2,2,1), point3(0,0,-1), vec3(0,1,0), 90, AspectRatio);
+    Camera camera(lookfrom, lookat, vup, 20, AspectRatio, aperture, dist_to_focus);
 
     //Render
     std::cout << "P3\n" << ImageWidth << ' ' <<ImageHeight << "\n255\n";
