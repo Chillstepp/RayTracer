@@ -25,6 +25,10 @@ reflect:
 
 ![image-20230215011521835](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230215011521835.png)
 
+ChangeCameraPos/Vup:
+
+![image-20230215205236260](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230215205236260.png)
+
 ## Some Tips
 
 ### Fixing Shadow Acne

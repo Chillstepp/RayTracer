@@ -15,8 +15,8 @@
 
 int main() {
     //Image
-    constexpr double AspectRatio = 3.0/2.0;
-    constexpr int ImageWidth = 1200;
+    constexpr double AspectRatio = 16.0/9.0;
+    constexpr int ImageWidth = 1000;
     constexpr int ImageHeight = static_cast<int>(ImageWidth/AspectRatio);
     constexpr int samples_per_pixel = 500;
     Image img{ImageWidth, ImageHeight};
@@ -38,7 +38,7 @@ int main() {
 
 
     //Camera
-    Camera camera(95.0, AspectRatio);
+    Camera camera(point3(-2,2,1), point3(0,0,-1), vec3(0,1,0), 90, AspectRatio);
 
     //Render
     std::cout << "P3\n" << ImageWidth << ' ' <<ImageHeight << "\n255\n";

@@ -9,7 +9,7 @@
 
 class Camera {
 public:
-    Camera(double vfov, double aspect_ratio);
+    Camera(point3 lookfrom, point3 lookat, vec3 vup, double vfov, double aspect_ratio);
     [[nodiscard]] Ray get_ray(double u, double v) const;
 private:
     point3 origin;
