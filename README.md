@@ -1,6 +1,10 @@
-# RayTracer
+# A Tiny RayTracer
 
-A tiny raytracer
+## Final 
+
+![image-20230216145512397](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230216145512397.png)
+
+## Process
 
 ![Normal](https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20221227174539161.png)
 
